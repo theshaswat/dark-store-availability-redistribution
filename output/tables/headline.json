@@ -1,0 +1,17 @@
+{
+  "z": 1.28,
+  "fill_rate_no_transfer": 0.9583,
+  "fill_rate_with_transfer": 0.9643,
+  "lost_units_no_transfer": 9228,
+  "lost_units_with_transfer": 7892,
+  "lost_units_avoided": 1336,
+  "lost_units_avoided_pct": 0.1448,
+  "units_moved": 3416,
+  "item_lane_weeks": 720,
+  "avg_units_per_move": 4.74,
+  "sales_saved_per_unit_moved": 0.3911,
+  "breakeven_move_cost_vs_lost_sale": 0.3911,
+  "days_of_cover_with_transfer": 5.367,
+  "days_of_cover_no_transfer_same_fill": 5.666,
+  "stock_saved_pct_same_fill": 0.0529
+}

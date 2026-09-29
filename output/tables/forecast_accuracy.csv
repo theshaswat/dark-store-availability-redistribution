@@ -1,0 +1,13 @@
+segment,method,wape,bias,series
+all,seasonal_naive,0.5129,-0.0080,400
+all,moving_avg_28,0.4716,-0.0312,400
+all,exp_smoothing,0.4102,-0.0060,400
+fast,seasonal_naive,0.4047,-0.0097,133
+fast,moving_avg_28,0.3839,-0.0369,133
+fast,exp_smoothing,0.3239,-0.0093,133
+medium,seasonal_naive,0.6654,-0.0049,134
+medium,moving_avg_28,0.6049,-0.0154,134
+medium,exp_smoothing,0.5277,0.0020,134
+slow,seasonal_naive,0.8333,-0.0046,133
+slow,moving_avg_28,0.7111,-0.0303,133
+slow,exp_smoothing,0.6744,-0.0026,133
