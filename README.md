@@ -56,7 +56,7 @@ costs more than the move. The plan is then tested against what customers actuall
 
 ```
 pip install -r requirements.txt
-python3 src/fetch_data.py       # downloads M5, about 78 MB, not committed
+python3 src/fetch_data.py       # downloads M5 (about 78 MB, not committed) and checks its SHA-256
 python3 src/prepare.py          # 100 items x 4 stores x 730 days
 python3 src/forecast.py         # backtest, about 20 seconds
 python3 src/redistribute.py     # replay with and without transfers
@@ -66,7 +66,9 @@ python3 tests/test_pipeline.py
 
 ## Checks
 
-`tests/test_pipeline.py` confirms that:
+CI (`.github/workflows/verify.yml`) downloads M5, stops unless its SHA-256 matches the one
+pinned in `src/fetch_data.py`, rebuilds every table from scratch and compares it with the committed
+copy. Then `tests/test_pipeline.py` confirms that:
 - a transfer never creates or destroys stock, and a store never sends more than it holds;
 - no transfer happens when a move costs more than a lost sale, or when it would leave the sender short;
 - the backtest never uses a day on or after its origin, and every actual matches the source panel;
@@ -95,7 +97,8 @@ src/prepare.py         four CA stores, top 100 FOODS_3 items, 730 days
 src/forecast.py        rolling-origin backtest of three methods
 src/redistribute.py    replenishment replay and the transfer LP
 src/charts.py          figures for this README
-tests/test_pipeline.py
+tests/test_pipeline.py unit and data checks
+tests/check_outputs.py rebuilt tables against committed ones
 output/tables/         accuracy, service curve, transfer lanes, weekly losses, headline numbers
 output/charts/
 ```

@@ -1,0 +1,37 @@
+name: verify
+
+# CI downloads the M5 file, refuses to continue unless its SHA-256 matches the one
+# pinned in src/fetch_data.py, and rebuilds every table this repository ships:
+# the panel, the eight-week forecast backtest and the transfer replay.
+#
+# What it proves: the committed tables and the headline numbers in the README come
+# out of this code and this data. Rebuilt rates and averages must agree with the
+# committed ones to 1e-4, the precision they are written at; counts must agree
+# exactly. The unit tests then check the transfer LP (no stock created, no store
+# sends more than it holds, no move when it costs more than a lost sale) and that
+# the backtest never reads a day on or after its forecast origin.
+#
+# What it does not prove: that the illustrative costs (a move at 0.25 of a lost
+# sale) are right for any real operator, or that M5 sales equal demand. Those
+# limits are stated in the README. Charts are rebuilt but not compared, because
+# rendered images differ between machines.
+
+on: [push, pull_request]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: cp -r output/tables /tmp/committed
+      - run: python src/fetch_data.py
+      - run: python src/prepare.py
+      - run: python src/forecast.py
+      - run: python src/redistribute.py
+      - run: python tests/check_outputs.py /tmp/committed output/tables
+      - run: cd src && python charts.py
+      - run: python tests/test_pipeline.py
